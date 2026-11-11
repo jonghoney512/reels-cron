@@ -11,4 +11,4 @@ jobs:
     steps:
       - env:
           GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
-        run: gh workflow run publish.yml -R jonghoney512/reels-uploader -f jitter=300
+        run: gh workflow run publish.yml -R jonghoney512/reels-uploader --ref main -f jitter=300
