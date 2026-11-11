@@ -1,0 +1,14 @@
+name: dispatch-publish
+# 공개 저장소에서만 schedule이 돌므로, 여기서 비공개 reels-uploader의 publish.yml을 정시에 깨운다.
+# KST 08·09·10시, 20·21·22시 = UTC 23·00·01, 11·12·13
+on:
+  schedule:
+    - cron: "0 23,0,1,11,12,13 * * *"
+  workflow_dispatch:
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: gh workflow run publish.yml -R jonghoney512/reels-uploader -f jitter=300
