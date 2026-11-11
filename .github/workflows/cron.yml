@@ -4,6 +4,7 @@ name: dispatch-publish
 on:
   schedule:
     - cron: "0 23,0,1,11,12,13 * * *"
+    - cron: "20 12 * * *"   # 임시: 2026-11-11 21:20 KST 자동 발행 테스트, 확인 뒤 삭제
   workflow_dispatch:
 jobs:
   dispatch:
