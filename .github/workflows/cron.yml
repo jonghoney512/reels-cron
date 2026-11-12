@@ -1,10 +1,10 @@
 name: dispatch-publish
-# 공개 저장소에서만 schedule이 돌므로, 여기서 비공개 reels-uploader의 publish.yml을 정시에 깨운다.
-# KST 08·09·10시, 20·21·22시 = UTC 23·00·01, 11·12·13
+# 공개 저장소에서만 schedule이 돌므로, 여기서 비공개 reels-uploader의 publish.yml을 깨운다.
+# GitHub cron은 몇 시간씩 늦거나 빠지므로 15분마다 두드리고, 슬롯 판단(KST 08·09·10·20·21·22,
+# 시간대당 1편)은 publish.yml의 slot gate가 한다.
 on:
   schedule:
-    - cron: "0 23,0,1,11,12,13 * * *"
-    - cron: "20 12 * * *"   # 임시: 2026-11-11 21:20 KST 자동 발행 테스트, 확인 뒤 삭제
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 jobs:
   dispatch:
@@ -12,4 +12,4 @@ jobs:
     steps:
       - env:
           GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
-        run: gh workflow run publish.yml -R jonghoney512/reels-uploader --ref main -f jitter=300
+        run: gh workflow run publish.yml -R jonghoney512/reels-uploader --ref main
